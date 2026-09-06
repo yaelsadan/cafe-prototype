@@ -20,8 +20,8 @@
 /* ------------------------------------------------------------- constants */
 var ORDER = ['entry','avcheck','searching','hub','flashcards','matched','agreement','live','ending'];
 
-var IMG_PARTNER = '../student-main-classroom-desktop/assets/teacher-gai.png';
-var IMG_YOU     = '../student-main-classroom-desktop/assets/pip-you.png';
+var IMG_PARTNER = 'assets/teacher-gai.png';
+var IMG_YOU     = 'assets/pip-you.png';
 
 /* Playground durations. The session is the real 6 minutes so the clock reads
    truthfully; everything else is shortened so a loop is reviewable. */
@@ -851,6 +851,7 @@ function applyHash(){
 }
 (function boot(){
   var p = new URLSearchParams(location.search);
+  if(p.get('mode') === 'interview') document.body.classList.add('interview-mode');
   var s = p.get('state') || (location.hash || '').replace('#','');
   if(s && ORDER.indexOf(s) !== -1) ST.state = s;
   seedFor(ST.state);

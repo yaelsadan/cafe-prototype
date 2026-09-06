@@ -70,6 +70,29 @@ h2{font-size:15px;margin:var(--s32) 0 var(--s8)}
 .note-card ul{padding-left:18px}
 .note-card code{font-size:12px;background:var(--surface-base);padding:1px 5px;border-radius:5px}
 
+/* Participant-facing research mode. The same prototype remains available
+   with its review controls at the plain URL; ?mode=interview removes all
+   implementation notes and state shortcuts that could bias a session. */
+body.interview-mode{
+  min-height:100vh;padding:24px;display:grid;place-items:center;
+  background:#e8e6e0;overflow:auto;
+}
+body.interview-mode > h1,
+body.interview-mode > .lead,
+body.interview-mode > h2,
+body.interview-mode .controls,
+body.interview-mode .notes{display:none}
+body.interview-mode .demo{display:block}
+
+@media (max-height:900px){
+  body.interview-mode .demo{width:304px;height:658px}
+  body.interview-mode .phone{transform:scale(.78);transform-origin:top left}
+}
+@media (max-height:720px){
+  body.interview-mode .demo{width:265px;height:574px}
+  body.interview-mode .phone{transform:scale(.68);transform-origin:top left}
+}
+
 
 /* ==========================================================================
    PHONE SHELL — canonical Gym mobile device: 390 x 844, 6px bezel inset
