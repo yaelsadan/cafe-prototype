@@ -895,9 +895,15 @@ function applyHash(){
 }
 (function boot(){
   var p = new URLSearchParams(location.search);
-  if(p.get('mode') === 'interview') document.body.classList.add('interview-mode');
-  var s = p.get('state') || (location.hash || '').replace('#','');
-  if(s && ORDER.indexOf(s) !== -1) ST.state = s;
+  var interviewMode = p.get('mode') === 'interview';
+  if(interviewMode){
+    document.body.classList.add('interview-mode');
+    ST.state = 'entry';
+    try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){}
+  } else {
+    var s = p.get('state') || (location.hash || '').replace('#','');
+    if(s && ORDER.indexOf(s) !== -1) ST.state = s;
+  }
   seedFor(ST.state);
 
   document.querySelectorAll('.sc').forEach(function(b){
