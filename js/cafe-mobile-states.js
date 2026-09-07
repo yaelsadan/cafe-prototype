@@ -20,8 +20,8 @@
 /* ------------------------------------------------------------- constants */
 var ORDER = ['entry','avcheck','searching','hub','flashcards','matched','agreement','live','ending'];
 
-var IMG_PARTNER = '../student-main-classroom-desktop/assets/teacher-gai.png';
-var IMG_YOU     = '../student-main-classroom-desktop/assets/pip-you.png';
+var IMG_PARTNER = 'assets/teacher-gai.png';
+var IMG_YOU     = 'assets/pip-you.png';
 
 /* Playground durations. The session is the real 6 minutes so the clock reads
    truthfully; everything else is shortened so a loop is reviewable. */
@@ -357,8 +357,8 @@ function levelsSheet(){
    cream arcs that fade in and out as they travel, never a hard line. */
 function searchMap(){
   var faces = {
-    2:'../student-main-classroom-desktop/assets/dana.png',
-    5:'../student-main-classroom-desktop/assets/teacher-yael.png'
+    2:'assets/dana.png',
+    5:'assets/teacher-yael.png'
   };
   var pins = [
     [18, 48], [24, 42], [36, 70], [50, 28], [48, 42], [72, 30]
@@ -1077,26 +1077,37 @@ function runPath(){
 
 /* -------------------------------------------------------------------- boot */
 function applyHash(){
+  if(document.body.classList.contains('interview-mode')) return;
   var h = (location.hash || '').replace('#','');
   if(h && ORDER.indexOf(h) !== -1 && h !== ST.state) setState(h);
 }
 (function boot(){
   var p = new URLSearchParams(location.search);
-  var s = p.get('state') || (location.hash || '').replace('#','');
-  if(s && ORDER.indexOf(s) !== -1) ST.state = s;
+  var interviewMode = p.get('mode') === 'interview';
+  if(interviewMode){
+    document.documentElement.classList.add('interview-mode');
+    document.body.classList.add('interview-mode');
+    ST.state = 'entry';
+    try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){}
+  } else {
+    var s = p.get('state') || (location.hash || '').replace('#','');
+    if(s && ORDER.indexOf(s) !== -1) ST.state = s;
+  }
   seedFor(ST.state);
 
-  document.querySelectorAll('.sc').forEach(function(b){
-    b.onclick = function(){
-      var v = b.dataset.sc;
-      /* the review switcher reaches every state directly, including the ones
-         that are only ever entered from a background process */
-      if(v === 'matched'){ ST.matching = true; ST.bg = 'hub'; }
-      if(v === 'hub' || v === 'searching' || v === 'flashcards') ST.matching = true;
-      setState(v);
-    };
-  });
-  window.addEventListener('hashchange', applyHash);
+  if(!interviewMode){
+    document.querySelectorAll('.sc').forEach(function(b){
+      b.onclick = function(){
+        var v = b.dataset.sc;
+        /* the review switcher reaches every state directly, including the ones
+           that are only ever entered from a background process */
+        if(v === 'matched'){ ST.matching = true; ST.bg = 'hub'; }
+        if(v === 'hub' || v === 'searching' || v === 'flashcards') ST.matching = true;
+        setState(v);
+      };
+    });
+    window.addEventListener('hashchange', applyHash);
+  }
 
   render();
   setInterval(tick, 1000);

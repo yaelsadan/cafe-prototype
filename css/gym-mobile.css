@@ -73,23 +73,34 @@ h2{font-size:15px;margin:var(--s32) 0 var(--s8)}
 /* Participant-facing research mode. The same prototype remains available
    with its review controls at the plain URL; ?mode=interview removes all
    implementation notes and state shortcuts that could bias a session. */
+html.interview-mode body,
 body.interview-mode{
   min-height:100vh;padding:24px;display:grid;place-items:center;
   background:#e8e6e0;overflow:auto;
 }
+html.interview-mode body > h1,
+html.interview-mode body > .lead,
+html.interview-mode body > h2,
+html.interview-mode .controls,
+html.interview-mode .notes,
 body.interview-mode > h1,
 body.interview-mode > .lead,
 body.interview-mode > h2,
 body.interview-mode .controls,
 body.interview-mode .notes{display:none}
+html.interview-mode .demo,
 body.interview-mode .demo{display:block}
 
 @media (max-height:900px){
+  html.interview-mode .demo,
   body.interview-mode .demo{width:304px;height:658px}
+  html.interview-mode .phone,
   body.interview-mode .phone{transform:scale(.78);transform-origin:top left}
 }
 @media (max-height:720px){
+  html.interview-mode .demo,
   body.interview-mode .demo{width:265px;height:574px}
+  html.interview-mode .phone,
   body.interview-mode .phone{transform:scale(.68);transform-origin:top left}
 }
 

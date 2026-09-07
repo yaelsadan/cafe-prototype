@@ -10,32 +10,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* FedraSerifPro — the brand serif. Loaded from the repo copy at Current/.
-   Display moments only: the Café headlines, the A/V check title, the partner
-   name on the match card. Every control, chip, timer and body string is
-   Assistant. */
+/* FedraSerifPro — the brand serif. Loaded from fonts/ at the repo root so
+   GitHub Pages can serve it. Display moments only: the Café headlines, the
+   A/V check title, the partner name on the match card. Every control, chip,
+   timer and body string is Assistant. */
 @font-face{
   font-family:"FedraSerifPro";
-  src:url("../FedraSerifPRO_HL-Book.otf") format("opentype");
+  src:url("fonts/FedraSerifPRO_HL-Book.otf") format("opentype");
   font-weight:400;
   font-style:normal;
   font-display:swap;
 }
 @font-face{
   font-family:"FedraSerifPro";
-  src:url("../FedraSerifPRO_HL-Bold.otf") format("opentype");
+  src:url("fonts/FedraSerifPRO_HL-Bold.otf") format("opentype");
   font-weight:700;
   font-style:normal;
   font-display:swap;
 }
 </style>
 
+<script>
+/* Apply before paint so interview sessions never flash operator chrome. */
+if(new URLSearchParams(location.search).get('mode') === 'interview'){
+  document.documentElement.classList.add('interview-mode');
+}
+</script>
+
 <!-- Shared Gym mobile design system. Do not add Café rules to these files. -->
-<link rel="stylesheet" href="css/gym-mobile.css">
+<link rel="stylesheet" href="css/gym-mobile.css?v=20260907-2">
 <!-- Café-only styling. -->
-<link rel="stylesheet" href="css/cafe-mobile.css">
+<link rel="stylesheet" href="css/cafe-mobile.css?v=20260907-2">
 </head>
 <body>
+<script>
+if(document.documentElement.classList.contains('interview-mode')){
+  document.body.classList.add('interview-mode');
+}
+</script>
 
 <h1>Citizen Café — Mobile <span style="font-weight:400;color:var(--text-muted);font-size:14px">v01 · primary design surface</span></h1>
 <p class="lead">
@@ -146,7 +158,7 @@
   </div>
 </div>
 
-<script src="js/gym-mobile.js"></script>
-<script src="js/cafe-mobile-states.js"></script>
+<script src="js/gym-mobile.js?v=20260907-2"></script>
+<script src="js/cafe-mobile-states.js?v=20260907-2"></script>
 </body>
 </html>
